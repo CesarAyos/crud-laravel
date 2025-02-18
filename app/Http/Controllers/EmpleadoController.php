@@ -63,6 +63,7 @@ class EmpleadoController extends Controller
     public function edit(empleado $empleado)
     {
         //
+        return view('empleado.edit');
     }
 
     /**

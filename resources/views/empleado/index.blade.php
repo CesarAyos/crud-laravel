@@ -29,7 +29,11 @@
                 <td>{{ $empleado ->primerApellido}}</td>
                 <td>{{ $empleado ->segundoApellido}}</td>
                 <td>{{ $empleado ->correo}}</td>
-                <td>Editar |
+                <td>
+                    
+                <a href="{{ url('/empleado/'.$empleado->id.'/edit') }}">
+                    Editar
+                </a>
                     
                 <form action="{{ url('/empleado/'.$empleado->id) }}" method="post">
                 @csrf
