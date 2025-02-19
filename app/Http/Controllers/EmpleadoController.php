@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\empleado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 class EmpleadoController extends Controller
@@ -60,19 +61,44 @@ class EmpleadoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(empleado $empleado)
+    public function edit($id)
     {
-        //
-        return view('empleado.edit');
+        // con este metodo traemos un registro de la base de datos
+        $empleado = Empleado::findOrFail($id);
+
+        // con este metodo retornamos la vista y le pasamos el registro
+        return view('empleado.edit', compact('empleado'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, empleado $empleado)
-    {
-        //
+    public function update(Request $request, $id)
+{
+    // Obtenemos todos los datos excepto el token y el método
+    $datosEmpleado = $request->except(['_token', '_method']);
+
+    // Buscamos el empleado existente
+    $empleado = Empleado::findOrFail($id);
+
+    if ($request->hasFile('Foto')) {
+        // Eliminamos la foto antigua
+        Storage::delete('public/'.$empleado->Foto);
+
+        // Guardamos la nueva foto
+        $datosEmpleado['Foto'] = $request->file('Foto')->store('uploads', 'public');
     }
+
+    // Actualizamos los datos del empleado
+    Empleado::where('id', '=', $id)->update($datosEmpleado);
+
+    // Volvemos a cargar el empleado actualizado
+    $empleado = Empleado::findOrFail($id);
+
+    // Con este código nos aseguramos que al actualizar la información vuelva a la vista principal
+    return view('empleado.edit', compact('empleado'));
+}
+
 
     /**
      * Remove the specified resource from storage.

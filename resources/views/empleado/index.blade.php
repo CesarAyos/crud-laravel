@@ -24,7 +24,9 @@
     @foreach($empleados as $empleado)
             <tr>
                 <td>{{ $empleado ->id}}</td>
-                <td>{{ $empleado ->foto}}</td>
+                <td>
+                <img style="heigth: 200px;width: 200px;" src="{{ asset('storage'.'/'.$empleado->foto) }}" alt="">
+                </td>
                 <td>{{ $empleado ->nombre}}</td>
                 <td>{{ $empleado ->primerApellido}}</td>
                 <td>{{ $empleado ->segundoApellido}}</td>
