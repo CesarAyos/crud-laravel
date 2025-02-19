@@ -1,3 +1,14 @@
+@extends('layouts.app')
+@section('content')
+
+<div class="d-flex justify-content-center p-4">
+<button class="btn btn-primary"><a href="{{'empleado/create'}}"  class="text-decoration-none text-white">Registrar nuevo empleado</a></button>
+</div>
+
+@if(Session::has('mensaje'))
+    {{ Session::get('mensaje') }}
+@endif    
+
 <div
     class="table-responsive"
 >
@@ -9,7 +20,7 @@
                 Table Name
             </caption>
             <tr>
-                <th>#</th>
+                <th>id</th>
                 <th>foto</th>
                 <th>Nombre</th>
                 <th>primer Apellido</th>
@@ -25,7 +36,7 @@
             <tr>
                 <td>{{ $empleado ->id}}</td>
                 <td>
-                <img style="heigth: 200px;width: 200px;" src="{{ asset('storage'.'/'.$empleado->foto) }}" alt="">
+                <img class="img-thumbnail img-fluid" style="heigth: 100px;width: 100px;" src="{{ asset('storage'.'/'.$empleado->foto) }}" alt="">
                 </td>
                 <td>{{ $empleado ->nombre}}</td>
                 <td>{{ $empleado ->primerApellido}}</td>
@@ -33,14 +44,15 @@
                 <td>{{ $empleado ->correo}}</td>
                 <td>
                     
-                <a href="{{ url('/empleado/'.$empleado->id.'/edit') }}">
+                <button class="btn btn-success m-2"><a href="{{ url('/empleado/'.$empleado->id.'/edit') }}" class="text-white text-decoration-none">
                     Editar
                 </a>
+                </button>
                     
                 <form action="{{ url('/empleado/'.$empleado->id) }}" method="post">
                 @csrf
                 {{ method_field('DELETE') }}
-                <input type="submit" value="Borrar" onclick="return confirm('¿Quieres borrar?')">
+                <input type="submit" class="btn btn-danger m-2" value="Borrar" onclick="return confirm('¿Quieres borrar?')">
                 </form>
                 </td>
             </tr>
@@ -51,3 +63,4 @@
         </tfoot>
     </table>
 </div>
+@endsection
