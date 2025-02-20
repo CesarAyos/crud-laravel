@@ -1,13 +1,37 @@
 @extends('layouts.app')
 @section('content')
 
+
+
 <div class="d-flex justify-content-center p-4">
 <button class="btn btn-primary"><a href="{{'empleado/create'}}"  class="text-decoration-none text-white">Registrar nuevo empleado</a></button>
 </div>
 
+
 @if(Session::has('mensaje'))
+<div
+    class="alert alert-success alert-dismissible fade show"
+    role="alert"
+>
+    <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+    ></button>
+    
     {{ Session::get('mensaje') }}
-@endif    
+  
+</div>
+@endif
+
+
+<script>
+    var alertList = document.querySelectorAll(".alert");
+    alertList.forEach(function (alert) {
+        new bootstrap.Alert(alert);
+    });
+</script> 
 
 <div
     class="table-responsive"
@@ -16,8 +40,8 @@
         class="table table-striped table-hover table-borderless table-primary align-middle"
     >
         <thead class="table-light">
-            <caption>
-                Table Name
+            <caption class="text-end p-3">
+                Empleados Registrados
             </caption>
             <tr>
                 <th>id</th>
@@ -62,5 +86,7 @@
             
         </tfoot>
     </table>
+{!! $empleados->links() !!}
+
 </div>
 @endsection

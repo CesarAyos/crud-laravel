@@ -97,7 +97,8 @@ class EmpleadoController extends Controller
     $empleado = Empleado::findOrFail($id);
 
     // Con este código nos aseguramos que al actualizar la información vuelva a la vista principal
-    return view('empleado.edit', compact('empleado'));
+    // return view('empleado.edit', compact('empleado'));
+    return redirect('empleado')->with('mensaje','Empleado modificado con exito');
 }
 
 
